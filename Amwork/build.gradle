@@ -1,0 +1,78 @@
+apply plugin: 'com.android.library'
+apply plugin: 'android-apt'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.github.coolhades:AmCore:v0.1'//AmFactory
+
+    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+
+    compile 'org.greenrobot:eventbus:3.0.0'
+    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+
+
+    compile('com.zhy:base-rvadapter:3.0.3') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.zhy:base-adapter:3.0.3') {
+        exclude group: 'com.android.support'
+    }
+
+
+    compile('com.jakewharton.rxbinding2:rxbinding:2.0.0') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.jakewharton.rxbinding2:rxbinding-design:2.0.0') {
+        exclude group: 'com.android.support'
+    }
+
+}
+apt {
+    arguments {
+        eventBusIndex "wang.imallen.eventbusannotationsample.MyEventBusIndex"
+    }
+}
