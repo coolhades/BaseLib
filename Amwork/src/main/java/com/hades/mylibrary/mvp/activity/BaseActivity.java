@@ -33,8 +33,6 @@ public abstract class BaseActivity<P extends IRootPresenter> extends AppCompatAc
     }
 
 
-
-
     public P getPresenter() {
         return mPresenter;
     }

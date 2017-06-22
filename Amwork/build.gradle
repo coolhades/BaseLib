@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'android-apt'
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.coolhades'  //替换成你的 Github 的用户名
 
 android {
     compileSdkVersion 25
@@ -49,16 +51,12 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
 
     compile 'org.greenrobot:eventbus:3.0.0'
-    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
-
-
     compile('com.zhy:base-rvadapter:3.0.3') {
         exclude group: 'com.android.support'
     }
     compile('com.zhy:base-adapter:3.0.3') {
         exclude group: 'com.android.support'
     }
-
 
     compile('com.jakewharton.rxbinding2:rxbinding:2.0.0') {
         exclude group: 'com.android.support'
@@ -69,6 +67,9 @@ dependencies {
     compile('com.jakewharton.rxbinding2:rxbinding-design:2.0.0') {
         exclude group: 'com.android.support'
     }
+
+    compile 'com.umeng.analytics:analytics:latest.integration'//统计
+    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
 
 }
 apt {

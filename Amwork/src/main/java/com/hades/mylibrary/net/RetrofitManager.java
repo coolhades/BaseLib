@@ -1,8 +1,6 @@
-package com.hades.mylibrary.base.net;
+package com.hades.mylibrary.net;
 
 import android.content.Context;
-
-import com.hades.mylibrary.base.data.ACache;
 
 import java.util.concurrent.TimeUnit;
 
@@ -60,12 +58,6 @@ public class RetrofitManager {
     @Deprecated
     //3 初始化retrofit [需要设置url后方可使用]
     public Retrofit getDefaultRetrofit() {
-        if (null != mBaseUrl) {
-            if (null != ACache.get(mContext, "BaseUrl").getAsString("BaseUrl")) {
-                mBaseUrl = ACache.get(mContext, "BaseUrl").getAsString("BaseUrl");
-            }
-        }
-
         if (null != mBaseUrl) {
             if (mOkHttpClient != null) {
                 mRetrofit = new Retrofit.Builder()

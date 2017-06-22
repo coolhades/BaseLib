@@ -1,4 +1,4 @@
-package com.hades.mylibrary.base.net;
+package com.hades.mylibrary.net;
 
 import android.content.Context;
 
@@ -96,41 +96,4 @@ public class HttpClientManager {
         return builder;
     }
 
-
-
-    /**
-    * 创建时间 16/10/10
-    * auther Hades
-    * 描述  在需要配置
-     *     底层网络通道时 设置
-    **/
-    public void initClientType(int type){
-        if (type == TYPE_HTTP){
-            //默认
-
-        }else if (type == TYPE_HTTPS){
-
-        }
-    }
-
-
-    public OkHttpClient getmOkHttpClient() {
-        return mOkHttpClient;
-    }
-
-    public CustomsClient getCustomsClient(){
-        return new CustomsClient();
-    }
-
-    public class CustomsClient<T>{
-        T client;
-
-        public CustomsClient() {
-        }
-
-        public void setClient(T Client){
-            client  = Client;
-        }
-
-    }
 }

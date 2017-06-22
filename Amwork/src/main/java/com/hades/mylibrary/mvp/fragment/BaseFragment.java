@@ -1,12 +1,15 @@
-package com.hades.mylibrary.base.ui.mvp.fragment;
+package com.hades.mylibrary.mvp.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.hades.mylibrary.base.ui.mvp.interf.IRootView;
-import com.hades.mylibrary.base.ui.mvp.presenter.IRootPresenter;
+import com.hades.mylibrary.mvp.interf.IRootView;
+import com.hades.mylibrary.mvp.presenter.IRootPresenter;
 
 
 /**
@@ -23,16 +26,14 @@ public abstract class BaseFragment<P extends IRootPresenter> extends Fragment im
         this.mActivity = activity;
     }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = LayoutInflater.from(mActivity)
-//                .inflate(getLayoutId(), container, false);
-//
-//
-//
-//        return view;
-//    }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = LayoutInflater.from(mActivity)
+                .inflate(getLayoutId(), container, false);
+        init(view, savedInstanceState);
+        return view;
+    }
 
     public void init(View view, Bundle savedInstanceState){
         mPresenter = onLoadPresenter();
@@ -59,6 +60,7 @@ public abstract class BaseFragment<P extends IRootPresenter> extends Fragment im
         super.onDestroy();
     }
 
+    protected abstract int getLayoutId();
 
     protected abstract P onLoadPresenter();
     protected abstract void initView(View view, Bundle savedInstanceState);
