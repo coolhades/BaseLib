@@ -5,6 +5,7 @@ package com.hades.mylibrary.status;
 * author Hades
 * 描述 用户状态管理 通过注入不同私有云用户状态
 **/
+@Deprecated
 public class StatusController {
 
     private boolean isLogin = false;
