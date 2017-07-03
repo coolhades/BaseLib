@@ -16,9 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitManager {
 
-    //    public static String API_URL = "http://demoa.ab-auto-mooc.com/api/";
-    public static String API_URL = "http://plat.ab-auto-mooc.com/api/";
-//    public static String API_URL = "http://plat.auto-mooc.com/api/";
+    public static String API_URL = "";
     private static OkHttpClient.Builder httpClient = initClient();
 
     private static Retrofit.Builder mBuilder =
