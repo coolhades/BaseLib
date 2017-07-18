@@ -1,4 +1,4 @@
-package com.hades.mylibrary.utils;
+package com.hades.mylibrary.utils.image;
 
 import android.content.Context;
 
@@ -14,7 +14,7 @@ public class ImageLoaderUtils {
     public static final int IMG_DEFAULT_TYPE = 0;
     public static final int LOAD_STRATEGY_DEFAULT = 0;
 
-    private ImageLoaderStrategy mStrategy;
+    private ImageStrategy mStrategy;
 
     public static ImageLoaderUtils getmIntance() {
         return SingleInstance.imageLoaderUtils;
@@ -28,7 +28,7 @@ public class ImageLoaderUtils {
      * @param strategy ImageLoaderStrategy 实现了图片加载库的统一封装
      *                 提供图片加载 缓存清理等接口
      **/
-    public void setLoadStrategy(ImageLoaderStrategy strategy) {
+    public void setLoadStrategy(ImageStrategy strategy) {
         if (null != strategy) {
             mStrategy = strategy;
         }
@@ -42,7 +42,7 @@ public class ImageLoaderUtils {
      * @param mContext  Activity、Fragment、Application...
      * @param parameter 封装的图片信息参数类 此处为拷贝
      **/
-    public void loadImage(Context mContext, ImageParameter parameter) {
+    public void loadImage(Context mContext, ImageParam parameter) {
         mStrategy.loadImage(mContext, parameter);
     }
 
@@ -51,7 +51,7 @@ public class ImageLoaderUtils {
      * auther Hades
      * 描述 内部使用了ImageView的Context
      **/
-    public void loadImage(ImageParameter parameter) {
+    public void loadImage(ImageParam parameter) {
         mStrategy.loadImage(parameter);
     }
 
@@ -76,7 +76,7 @@ public class ImageLoaderUtils {
 
     private ImageLoaderUtils() {
         //默认策略 Glide
-        mStrategy = new GlideImageLoaderStrategy();
+        mStrategy = new GlideLoaderStrategy();
     }
 
 

@@ -1,20 +1,18 @@
-package com.hades.mylibrary.utils;
+package com.hades.mylibrary.utils.image;
 
 import android.content.Context;
 import android.os.Looper;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.hades.mylibrary.utils.CacheSizeUtil;
 
 
 /**
  * Created by Hades on 2017/2/16.
  */
 
-public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
+public class GlideLoaderStrategy implements ImageStrategy {
 
     @Override
     public void clearImageDiskCache(final Context context) {
@@ -63,39 +61,39 @@ public class GlideImageLoaderStrategy implements ImageLoaderStrategy {
     }
 
     @Override
-    public void loadImage(ImageParameter parameter) {
+    public void loadImage(ImageParam parameter) {
         loadNormal(parameter.getImageView().getContext(), parameter);
     }
 
     @Override
-    public void loadImage(Context context, ImageParameter parameter) {
+    public void loadImage(Context context, ImageParam parameter) {
         loadNormal(context, parameter);
     }
 
 
-    private void loadNormal(Context context,ImageParameter parameter){
+    private void loadNormal(Context context,ImageParam parameter) {
         //去掉动画 解决与CircleImageView冲突的问题 这个只是其中的一个解决方案
         //使用SOURCE 图片load结束再显示而不是先显示缩略图再显示最终的图片（导致图片大小不一致变化）
         final long startTime = System.currentTimeMillis();
-        Glide.with(context)
-                .load(parameter.getImageUrl())
-                .error(parameter.getErrorHolder())//load失敗的Drawable
-                .placeholder(parameter.getPlaceHolder())//loading時候的Drawable
-                .dontAnimate() //去掉淡入淡出
-                // .animate()//設置load完的動畫
-//                .centerCrop()//中心切圖, 會填滿
-                .fitCenter()//中心fit, 以原本圖片的長寬為主
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE).listener(new RequestListener<String, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        return false;
-                    }
-                    })
-                .into(parameter.getImageView());
+        if (0 == parameter.getWidth() || 0 == parameter.getHeigh()) {
+            Glide.with(context)
+                    .load(parameter.getImageUrl())
+                    .error(parameter.getErrorHolder())//load失敗的Drawable
+                    .placeholder(parameter.getPlaceHolder())//loading時候的Drawable
+                    .dontAnimate() //去掉淡入淡出
+                    .fitCenter()//中心fit, 以原本圖片的長寬為主
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(parameter.getImageView());
+        }else {
+            Glide.with(context)
+                    .load(parameter.getImageUrl())
+                    .error(parameter.getErrorHolder())//load失敗的Drawable
+                    .placeholder(parameter.getPlaceHolder())//loading時候的Drawable
+                    .dontAnimate() //去掉淡入淡出
+                    .override(parameter.getWidth(), parameter.getHeigh())
+                    .fitCenter()//中心fit, 以原本圖片的長寬為主
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(parameter.getImageView());
+        }
     }
 }
