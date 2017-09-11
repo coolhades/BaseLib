@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.hades.mylibrary.utils.restart.AppStatusConstant;
+import com.hades.mylibrary.utils.restart.AppStatusManager;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -19,15 +21,16 @@ public abstract class NormalBaseActivity extends AppCompatActivity {
         init(savedInstanceState);
     }
 
-    public void init(Bundle savedInstanceState){
-        initView(savedInstanceState);
-        initData();
-        initEvent();
+    public void init(Bundle savedInstanceState) {
+        checkStatus(savedInstanceState);
     }
 
     protected abstract int getLayout();
+
     protected abstract void initView(Bundle savedInstanceState);
+
     protected abstract void initData();
+
     protected abstract void initEvent();
 
     @Override
@@ -41,4 +44,26 @@ public abstract class NormalBaseActivity extends AppCompatActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+
+    protected void checkStatus(Bundle savedInstanceState) {
+        switch (AppStatusManager.getInstance().getAppStatus()) {
+            case AppStatusConstant.STATUS_FORCE_KILLED:
+                restartApp(savedInstanceState);
+                break;
+            case AppStatusConstant.STATUS_NORMAL:
+                setUpViewAndData(savedInstanceState);
+                break;
+        }
+
+    }
+
+    protected  void setUpViewAndData(Bundle savedInstanceState){
+        initView(savedInstanceState);
+        initData();
+        initEvent();
+    }
+
+    protected abstract void restartApp(Bundle savedInstanceState);
+
 }
